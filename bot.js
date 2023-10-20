@@ -5,8 +5,8 @@ const ethers = require("ethers");
 const { Console } = require("console");
 const app = express();
 const PORT = process.env.PORT || 3888;
-let wss = "";
-const secretKey = ""
+let wss = "wss://your-fastlynode-url";
+const secretKey = "your secret key and please make sure to keep it safe"
 const web3 = new Web3(wss)
 
 
@@ -151,7 +151,6 @@ customWsProvider.on("pending", (tx) => {
     const gasPrice= web3.utils.fromWei(transaction.gasPrice.toString())
     const gasLimit= web3.utils.fromWei(transaction.gasLimit.toString())
   // for example we will be only showing transaction that are higher than 30 bnb
-  // console.log(transaction)
     if(value>10) {
       console.log("------------------------------------------------New Transaction------------------------------------------------");
       console.log("value : ",value);
