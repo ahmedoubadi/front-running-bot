@@ -2,7 +2,6 @@ const express = require("express");
 const http = require('http');
 const Web3=  require("web3")
 const ethers = require("ethers");
-const { Console } = require("console");
 const app = express();
 const PORT = process.env.PORT || 3888;
 let wss = "wss://your-fastlynode-url";
