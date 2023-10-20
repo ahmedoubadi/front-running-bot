@@ -152,7 +152,7 @@ customWsProvider.on("pending", (tx) => {
     const gasLimit= web3.utils.fromWei(transaction.gasLimit.toString())
   // for example we will be only showing transaction that are higher than 30 bnb
   // console.log(transaction)
-    if(value>0) {
+    if(value>10) {
       console.log("------------------------------------------------New Transaction------------------------------------------------");
       console.log("value : ",value);
       console.log("gasPrice : ",gasPrice);
