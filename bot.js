@@ -16,10 +16,12 @@ const abi = [{"inputs":[{"internalType":"address","name":"_factory","type":"addr
 function calculate_gas_price(action, amount){
   if (action==="buy"){
     const gazLimit = ethers.utils.formatUnits(amount.add(1000000000), 'gwei')
-    return ethers.BigNumber.from(gazLimit.toString())
+    // console.log( Math.trunc(gazLimit), "Gas Limit")
+    
+    return ethers.BigNumber.from(Math.trunc(gazLimit).toString())
   }else{
     const gazLimit = ethers.utils.formatUnits(amount.sub(1000000000), 'gwei')
-    return ethers.BigNumber.from(gazLimit.toString())
+    return ethers.BigNumber.from(Math.trunc(gazLimit).toString())
   }
 }
 function router(account) {
@@ -149,6 +151,7 @@ customWsProvider.on("pending", (tx) => {
     const gasLimit= web3.utils.fromWei(transaction.gasLimit.toString())
   // for example we will be only showing transaction that are higher than 30 bnb
     if(value>10) {
+      console.log("------------------------------------------------New Transaction------------------------------------------------");
       console.log("value : ",value);
       console.log("gasPrice : ",gasPrice);
       console.log("gasLimit : ",gasLimit);
@@ -169,6 +172,7 @@ customWsProvider.on("pending", (tx) => {
       }
       }
       }
+      console.log(result)
       if(result.length>0){
         let tokenAddress = ""
         if(result[1].length>0){
