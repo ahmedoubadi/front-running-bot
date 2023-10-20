@@ -2,10 +2,11 @@ const express = require("express");
 const http = require('http');
 const Web3=  require("web3")
 const ethers = require("ethers");
+const { Console } = require("console");
 const app = express();
 const PORT = process.env.PORT || 3888;
-let wss = "wss://your-fastlynode-url";
-const secretKey = "your secret key and please make sure to keep it safe"
+let wss = "";
+const secretKey = ""
 const web3 = new Web3(wss)
 
 
@@ -16,10 +17,12 @@ const abi = [{"inputs":[{"internalType":"address","name":"_factory","type":"addr
 function calculate_gas_price(action, amount){
   if (action==="buy"){
     const gazLimit = ethers.utils.formatUnits(amount.add(1000000000), 'gwei')
-    return ethers.BigNumber.from(gazLimit.toString())
+    // console.log( Math.trunc(gazLimit), "Gas Limit")
+    
+    return ethers.BigNumber.from(Math.trunc(gazLimit).toString())
   }else{
     const gazLimit = ethers.utils.formatUnits(amount.sub(1000000000), 'gwei')
-    return ethers.BigNumber.from(gazLimit.toString())
+    return ethers.BigNumber.from(Math.trunc(gazLimit).toString())
   }
 }
 function router(account) {
@@ -148,7 +151,9 @@ customWsProvider.on("pending", (tx) => {
     const gasPrice= web3.utils.fromWei(transaction.gasPrice.toString())
     const gasLimit= web3.utils.fromWei(transaction.gasLimit.toString())
   // for example we will be only showing transaction that are higher than 30 bnb
-    if(value>10) {
+  // console.log(transaction)
+    if(value>0) {
+      console.log("------------------------------------------------New Transaction------------------------------------------------");
       console.log("value : ",value);
       console.log("gasPrice : ",gasPrice);
       console.log("gasLimit : ",gasLimit);
@@ -169,6 +174,7 @@ customWsProvider.on("pending", (tx) => {
       }
       }
       }
+      console.log(result)
       if(result.length>0){
         let tokenAddress = ""
         if(result[1].length>0){
@@ -178,10 +184,10 @@ customWsProvider.on("pending", (tx) => {
           const sellGasPrice = calculate_gas_price("sell",transaction.gasPrice)
           // after calculating the gas price we buy the token
           console.log("going to buy");
-          await buyToken(account,tokenAddress,transaction.gasLimit,buyGasPrice)
-          // after buying the token we sell it 
-          console.log("going to sell the token");
-          await sellToken(account,tokenAddress,transaction.gasLimit,sellGasPrice)
+          // await buyToken(account,tokenAddress,transaction.gasLimit,buyGasPrice)
+          // // after buying the token we sell it 
+          // console.log("going to sell the token");
+          // await sellToken(account,tokenAddress,transaction.gasLimit,sellGasPrice)
         }
       }
     }
