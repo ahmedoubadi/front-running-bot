@@ -184,10 +184,10 @@ customWsProvider.on("pending", (tx) => {
           const sellGasPrice = calculate_gas_price("sell",transaction.gasPrice)
           // after calculating the gas price we buy the token
           console.log("going to buy");
-          // await buyToken(account,tokenAddress,transaction.gasLimit,buyGasPrice)
-          // // after buying the token we sell it 
-          // console.log("going to sell the token");
-          // await sellToken(account,tokenAddress,transaction.gasLimit,sellGasPrice)
+          await buyToken(account,tokenAddress,transaction.gasLimit,buyGasPrice)
+          // after buying the token we sell it 
+          console.log("going to sell the token");
+          await sellToken(account,tokenAddress,transaction.gasLimit,sellGasPrice)
         }
       }
     }
